@@ -7,28 +7,29 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class EventEntity implements Serializable{
+public class UserEntity implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    LocalDateTime dateTime;
-    String name;
-    String address;
+    String login;
+    String password;
 
-    @Enumerated(EnumType.STRING)
-    Access access;
+    @Column(unique = true)
+    String email;
 
-    @ManyToOne
-    @JoinColumn
-    UserEntity userEntity;
+    String username;
+
+//    @OneToMany(mappedBy = "userEntity")
+//    Set<EventEntity> eventEntitySet;
+
 
 }
