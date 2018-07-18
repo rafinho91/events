@@ -15,18 +15,12 @@ import pl.sda.events.service.UserService;
 @Controller
 public class EventController {
 
-    private UserService userService;
     private EventService eventService;
-    private ParticipationService participationService;
-    private CommentService commentService;
 
     @Autowired
-    public EventController(UserService userService, EventService eventService,
-                           ParticipationService participationService, CommentService commentService) {
-        this.userService = userService;
+    public EventController(EventService eventService) {
         this.eventService = eventService;
-        this.participationService = participationService;
-        this.commentService = commentService;
+
     }
 
 //    @GetMapping(value = "/register")
