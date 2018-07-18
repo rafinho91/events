@@ -4,10 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Transient;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
-import java.util.Set;
 
 @Entity
 @Data
@@ -17,19 +19,24 @@ import java.util.Set;
 public class UserEntity implements Serializable{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    String login;
-    String password;
+    @Column(nullable = false, unique = true)
+    @Email(message = "Please provide a valid e-mail")
+    @NotEmpty(message = "Please provide an e-mail")
+    private String email;
 
-    @Column(unique = true)
-    String email;
+    @Transient
+    private String password;
 
-    String username;
+    @NotEmpty(message = "Please provide your first name")
+    private String firstName;
 
-//    @OneToMany(mappedBy = "userEntity")
-//    Set<EventEntity> eventEntitySet;
+    @NotEmpty(message = "Please provide your last name")
+    private String lastName;
 
+    private boolean enabled;
+    private String confirmationToken;
 
 }
