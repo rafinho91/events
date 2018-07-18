@@ -47,30 +47,30 @@ public class EmailService {
             modelAndView.setViewName("register");
             bindingResult.reject("email");
         }
-
         if (bindingResult.hasErrors()){
             modelAndView.setViewName("register");
         }else{
             //Disable user until they click on cofirmation link in email
             userEntity.setConfirmationToken(UUID.randomUUID().toString());
             userService.saveUser(userEntity);
-
-            String appUrl = request.getScheme() + "//" + request.getServerName() + ":" + request.getServerPort();
-
-            SimpleMailMessage registrationMail = new SimpleMailMessage();
-            registrationMail.setTo(userEntity.getEmail());
-            registrationMail.setSubject("Registration Confirmation");
-            registrationMail.setText("To confirm your account, please click the link below:\n"
-                    + appUrl + "/confirm?token=" + userEntity.getConfirmationToken());
-            registrationMail.setFrom("noreply@events.com");
-
+            SimpleMailMessage registrationMail = createActivationMailMessage(userEntity, request);
             sendEmail(registrationMail);
-
             modelAndView.addObject("confirmationMessage",
                     "A confirmation e-mail has been sent to " + userEntity.getEmail());
             modelAndView.setViewName("register");
         }
         return modelAndView;
+    }
+
+    private SimpleMailMessage createActivationMailMessage(UserEntity userEntity, HttpServletRequest request) {
+        String appUrl = request.getScheme() + "//" + request.getServerName() + ":" + request.getServerPort();
+        SimpleMailMessage registrationMail = new SimpleMailMessage();
+        registrationMail.setTo(userEntity.getEmail());
+        registrationMail.setSubject("Registration Confirmation");
+        registrationMail.setText("To confirm your account, please click the link below:\n"
+                + appUrl + "/confirm?token=" + userEntity.getConfirmationToken());
+        registrationMail.setFrom("noreply@events.com");
+        return registrationMail;
     }
 
     public ModelAndView showConfirmationPage(ModelAndView modelAndView, String token){
@@ -94,17 +94,14 @@ public class EmailService {
         if (strength.getScore() < 3) {
             bindingResult.reject("password");
             redir.addFlashAttribute("errorMessage", "Your password is too weak. Choose a stronger one");
-
             modelAndView.setViewName("redirect:confirm?token=" + requestParams.get("token"));
             System.out.println(requestParams.get("token"));
             return modelAndView;
         }
-
         UserEntity userEntity = userService.findByConfirmationToken(requestParams.get("token").toString());
         userEntity.setPassword(passwordEncoder.encode(requestParams.get("password").toString()));
         userEntity.setEnabled(true);
         userService.saveUser(userEntity);
-
         modelAndView.addObject("successMessage", "Your password has been set!");
         return modelAndView;
     }
