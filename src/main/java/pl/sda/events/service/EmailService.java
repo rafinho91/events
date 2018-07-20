@@ -36,10 +36,8 @@ public class EmailService {
         mailSender.send(email);
     }
 
-    public ModelAndView processRegistrationForm(ModelAndView modelAndView,
-                                                UserEntity userEntity,
-                                                BindingResult bindingResult,
-                                                HttpServletRequest request) {
+    public ModelAndView processRegistrationForm(ModelAndView modelAndView, UserEntity userEntity,
+                                                BindingResult bindingResult, HttpServletRequest request) {
         UserEntity userExists = userService.findByEmail(userEntity.getEmail());
         if (userExists != null){
             modelAndView.addObject("alreadyRegisteredMessage",

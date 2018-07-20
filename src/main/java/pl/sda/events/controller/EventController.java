@@ -6,11 +6,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+import pl.sda.events.model.EventEntity;
 import pl.sda.events.model.UserEntity;
 import pl.sda.events.service.CommentService;
 import pl.sda.events.service.EventService;
 import pl.sda.events.service.ParticipationService;
 import pl.sda.events.service.UserService;
+
+import javax.validation.Valid;
 
 @Controller
 public class EventController {
@@ -20,25 +24,23 @@ public class EventController {
     @Autowired
     public EventController(EventService eventService) {
         this.eventService = eventService;
-
     }
 
-//    @GetMapping(value = "/register")
-//    public String registerUserForm(Model model){
-//        model.addAttribute("user", new UserEntity());
-//        return "register";
-//    }
-//
-//    @PostMapping(value = "/register")
-//    public ResponseEntity<String> registerUser(@ModelAttribute UserEntity user, Model model ){
-//        userService.addToDb(user);
-//        return new ResponseEntity<>(HttpStatus.CREATED);
-//    }
-//
-//    @GetMapping(value = "/showAll")
-//    public String showAll(){
-//        return userService.showAll().toString();
-//    }
+    @RequestMapping(value = "/create", method = RequestMethod.GET)
+    public ModelAndView showCreateEventPage(ModelAndView modelAndView, EventEntity eventEntity) {
+        modelAndView.addObject("eventEntity", eventEntity);
+        modelAndView.setViewName("create");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    public ModelAndView createEvent(ModelAndView modelAndView, @Valid EventEntity eventEntity){
+        eventService.saveEvent(eventEntity);
+        modelAndView.addObject("confirmationMessage",
+                "Your: " + eventEntity.getName() + " has been created successfully");
+        modelAndView.setViewName("create");
+        return modelAndView;
+    }
 
 
 
