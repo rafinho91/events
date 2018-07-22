@@ -21,9 +21,9 @@
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <li ><a href="#">Find Events</a></li>
-                <li ><a href="#">Create new Event</a></li>
+                <li ><a href="/create">Create new Event</a></li>
                 <li ><a href="/register">Register</a></li>
-                <li ><a href="#">Login</a></li>
+                <li ><a href="login">Login</a></li>
                 <li><a href="#about">About</a></li>
             </ul>
         </div>
@@ -35,6 +35,12 @@
     <div class="starter-template">
         <h1>Welcome to EventsEverywhere!</h1>
     </div>
+    <div>
+        Logged in user: <b th:inline="text"  class="user"> [[${#httpServletRequest.remoteUser}]] </b>
+        <form th:action="@{/logout}" method="POST">
+            <input type="submit" value="Logout"/>
+        </form>
+    </div> <br/>
 
 </div>
 <!-- /.container -->

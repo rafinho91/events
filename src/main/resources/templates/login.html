@@ -16,6 +16,9 @@
 </form>
 
 <div class="container">
+    <p th:if="${param.error}" class="error">
+        Bad Credentials
+    </p>
     <form th:action="@{/login}" method="POST" class="form-signin">
         <h3 class="form-signin-heading" th:text="Login"></h3>
         <br/>

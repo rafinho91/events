@@ -26,6 +26,13 @@
 <div class="middle-box text-center loginscreen animated fadeInDown" style="padding: 20px">
     <div>
 
+        <div>
+            Logged in user: <b th:inline="text"  class="user"> [[${#httpServletRequest.remoteUser}]] </b>
+            <form th:action="@{/logout}" method="POST">
+                <input type="submit" value="Logout"/>
+            </form>
+        </div> <br/>
+
         <h4>New Event creator</h4>
 
         <form autocomplete="off" action="#" th:action="@{/create}"
@@ -85,12 +92,6 @@
                     </option>
                 </select>
             </div>
-            <!--<input type="text" th:field="*{access}"-->
-            <!--placeholder="Access" class="form-control" required/>-->
-            <!--<span class="glyphicon form-control-feedback"-->
-            <!--aria-hidden="true"></span>-->
-
-            <!--</div>-->
 
             <button type="submit"
                     class="btn btn-primary block full-width m-b">Create

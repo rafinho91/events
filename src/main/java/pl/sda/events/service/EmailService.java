@@ -99,6 +99,7 @@ public class EmailService {
         UserEntity userEntity = userService.findByConfirmationToken(requestParams.get("token").toString());
         userEntity.setPassword(passwordEncoder.encode(requestParams.get("password").toString()));
         userEntity.setEnabled(true);
+        userEntity.setRole("ROLE_USER");
         userService.saveUser(userEntity);
         modelAndView.addObject("successMessage", "Your password has been set!");
         return modelAndView;

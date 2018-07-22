@@ -1,10 +1,12 @@
 package pl.sda.events.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
 import pl.sda.events.model.UserEntity;
 import pl.sda.events.service.UserService;
 
@@ -14,12 +16,10 @@ import java.util.Optional;
 public class UserController {
 
     private UserService userService;
-    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public UserController(UserService userService, PasswordEncoder passwordEncoder) {
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping("/")
@@ -27,19 +27,20 @@ public class UserController {
         return "index";
     }
 
-    @GetMapping("/login")
-    public String login() {
-        return "login";
+    @GetMapping("login")
+    public ModelAndView login() {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("login");
+        return mav;
     }
 
-    @PostMapping("/login")
-    public String processLogin(String email, String password) {
-        Optional<UserEntity> byEmail = Optional.ofNullable(userService.findByEmail(email));
-        if (byEmail.isPresent() && passwordEncoder.encode(password).equals(byEmail.get().getPassword())) {
-            return "create";
-        } else {
-            return "login";
-        }
+    @GetMapping("error")
+    public ModelAndView error() {
+        ModelAndView mav = new ModelAndView();
+        String errorMessage= "You are not authorized for the requested data.";
+        mav.addObject("errorMsg", errorMessage);
+        mav.setViewName("403");
+        return mav;
     }
 
 }

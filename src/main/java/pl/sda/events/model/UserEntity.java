@@ -38,5 +38,6 @@ public class UserEntity implements Serializable{
 
     private boolean enabled;
     private String confirmationToken;
+    private String role;
 
 }
