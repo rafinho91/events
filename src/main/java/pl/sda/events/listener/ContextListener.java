@@ -34,7 +34,7 @@ public class ContextListener{
                 .enabled(true)
                 .email("rafal91@gmail.com")
                 .password(passwordEncoder.encode("Rafal!991"))
-                .role("USER")
+                .role("ROLE_USER")
                 .confirmationToken(UUID.randomUUID().toString())
                 .build();
         userRepository.save(rafal);
@@ -44,7 +44,7 @@ public class ContextListener{
                 .enabled(true)
                 .email("robert87@gmail.com")
                 .password(passwordEncoder.encode("robert"))
-                .role("USER_ROLE")
+                .role("ROLE_USER")
                 .confirmationToken(UUID.randomUUID().toString())
                 .build();
         userRepository.save(robert);

@@ -23,12 +23,12 @@ import javax.validation.Valid;
 public class EventController {
 
     private EventService eventService;
-    private CommentService commentService;
+    private UserService userService;
 
     @Autowired
-    public EventController(EventService eventService, CommentService commentService) {
+    public EventController(EventService eventService, UserService userService) {
         this.eventService = eventService;
-        this.commentService = commentService;
+        this.userService = userService;
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
@@ -41,8 +41,9 @@ public class EventController {
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public ModelAndView createEvent(ModelAndView modelAndView, @Valid EventEntity eventEntity){
-//        UserEntity userEntity = (UserEntity)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        eventEntity.setUserEntity(userEntity);
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        UserEntity byEmail = userService.findByEmail(email);
+        eventEntity.setUserEntity(byEmail);
         eventService.saveEvent(eventEntity);
         modelAndView.addObject("confirmationMessage",
                 "Your: " + eventEntity.getName() + " has been created successfully");
