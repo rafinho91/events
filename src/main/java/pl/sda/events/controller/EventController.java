@@ -32,7 +32,8 @@ public class EventController {
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
-    public ModelAndView showCreateEventPage(ModelAndView modelAndView, EventEntity eventEntity) {
+    public ModelAndView showCreateEventPage(ModelAndView modelAndView) {
+        EventEntity eventEntity = new EventEntity();
         modelAndView.addObject("eventEntity", eventEntity);
         modelAndView.setViewName("create");
         return modelAndView;
@@ -40,8 +41,8 @@ public class EventController {
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public ModelAndView createEvent(ModelAndView modelAndView, @Valid EventEntity eventEntity){
-        UserEntity userEntity = (UserEntity)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        eventEntity.setUserEntity(userEntity);
+//        UserEntity userEntity = (UserEntity)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        eventEntity.setUserEntity(userEntity);
         eventService.saveEvent(eventEntity);
         modelAndView.addObject("confirmationMessage",
                 "Your: " + eventEntity.getName() + " has been created successfully");

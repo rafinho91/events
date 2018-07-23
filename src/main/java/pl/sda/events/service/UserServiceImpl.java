@@ -10,6 +10,7 @@ import pl.sda.events.repository.UserRepository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -27,10 +28,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserEntity getActiveUser(String email) {
         UserEntity activeUserEntity = new UserEntity();
-        List<?> list = entityManager.createQuery("SELECT u FROM UserEntity u WHERE u.email=:email and u.enabled=true")
-                .setParameter("email", email).getResultList();
-        if(!list.isEmpty()) {
-            activeUserEntity = (UserEntity) list.get(0);
+//        List<?> list = entityManager.createQuery("SELECT u FROM UserEntity u WHERE u.email=:email and u.enabled=true")
+//                .setParameter("email", email).getResultList();
+//        if(!list.isEmpty()) {
+//            activeUserEntity = (UserEntity) list.get(0);
+//        }
+        Optional<UserEntity> byEmail = Optional.ofNullable(userRepository.findByEmail(email));
+        if (byEmail.isPresent() && byEmail.get().isEnabled()){
+            activeUserEntity = byEmail.get();
         }
         return activeUserEntity;
     }
