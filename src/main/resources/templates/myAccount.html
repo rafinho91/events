@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Account</title>
+</head>
+<style>
+    body {
+        background-color: lightblue;
+    }
+    th, td {
+        font-size: medium;
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+</style>
+<body>
+<table style="width:auto">
+    <tr>
+        <th colspan="2"><h2>User's INFO</h2></th>
+    </tr>
+    <tr>
+        <th>Name: </th>
+        <td th:text="${userEntity.getFirstName()}"></td>
+    </tr>
+    <tr>
+        <th>Surname: </th>
+        <td th:text="${userEntity.getLastName()}"></td>
+    </tr>
+    <tr>
+        <th>Email: </th>
+        <td th:text="${userEntity.getEmail()}"></td>
+    </tr>
+</table>
+
+<div th:if="${userEvents != null}">
+    <h4 style="text-underline: auto">Users EVENTS: </h4>
+    <ul th:each="event: ${userEvents}">
+        <li>
+            <td style="font-weight: bold" th:text="${event.getName()}" />
+            <td th:text="${event.getDate()}" />
+            <td th:text="${event.getAddress()}" />
+        </li>
+    </ul>
+</div>
+
+</body>
+</html>

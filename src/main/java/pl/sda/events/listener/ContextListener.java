@@ -33,7 +33,7 @@ public class ContextListener{
                 .lastName("Drgas")
                 .enabled(true)
                 .email("rafal91@gmail.com")
-                .password(passwordEncoder.encode("Rafal!991"))
+                .password(passwordEncoder.encode("rafal"))
                 .role("ROLE_USER")
                 .confirmationToken(UUID.randomUUID().toString())
                 .build();
