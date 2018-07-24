@@ -23,6 +23,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+                .antMatchers("/img/**").permitAll()
                 .antMatchers("/create", "/myAccount").hasRole("USER")
                 .anyRequest().permitAll()
                 .and().formLogin()

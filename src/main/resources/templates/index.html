@@ -11,14 +11,29 @@
           href="../../css/main.css" />
 
 </head>
+<style>
+    th, td {
+        font-size: medium;
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+</style>
 <body>
 <div th:insert="fragments/header"></div>
 
 <div class="container">
+<table width="100%">
+    <tr>
+        <td style="border-bottom: 0"><img src="img/balloons-birthday-celebrate.jpg" height="250"></td>
+        <td style="border-bottom: 0">
+        <b style="font-size: xx-large; color: darkblue; padding: 10px">Welcome to EventsEverywhere!</b>
+        <p style="text-align: center; font-size: x-large; color: darkblue; font-weight: bold;padding: 10px">
+            Find.. &nbsp;&nbsp;&nbsp;&nbsp;Create.. &nbsp;&nbsp;&nbsp;&nbsp;Invite!</p>
+        </td>
+    </tr>
+</table>
 
-    <div class="starter-template">
-        <h1>Welcome to EventsEverywhere!</h1>
-    </div>
     <div th:if="${#authorization.expression('isAuthenticated()')}">
         Logged in user: <b th:inline="text"  class="user"> [[${#httpServletRequest.remoteUser}]] </b>
         <form th:action="@{/logout}" method="POST">
@@ -28,6 +43,35 @@
 
 </div>
 <!-- /.container -->
+
+<div>
+    <table style="width:100%; background: burlywood;">
+        <tr>
+            <td style="border-right: 2px solid #ddd; border-bottom: 0px" th:each="event: ${events}">
+                <table>
+                    <tr>
+                        <th>Name: </th>
+                        <td>
+                            <a th:text="${event.getName()}"  style="cursor:pointer; display:block" th:href="|/eventInfo/${event.getId()}|"></a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Date: </th>
+                        <td th:text="${event.getDate()}"></td>
+                    </tr>
+                    <tr>
+                        <th>Address: </th>
+                        <td th:text="${event.getAddress()}"></td>
+                    </tr>
+                    <tr>
+                        <th>Organiser: </th>
+                        <td th:text="${event.getUserEntity().getFirstName()}"></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>
 
 <script type="text/javascript"
         src="webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>

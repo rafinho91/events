@@ -26,11 +26,6 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/")
-    public String root() {
-        return "index";
-    }
-
     @GetMapping("login")
     public ModelAndView login() {
         ModelAndView mav = new ModelAndView();

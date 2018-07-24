@@ -5,8 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.sda.events.model.Access;
+import pl.sda.events.model.CommentEntity;
 import pl.sda.events.model.EventEntity;
 import pl.sda.events.model.UserEntity;
+import pl.sda.events.repository.CommentRepository;
 import pl.sda.events.repository.EventRepository;
 import pl.sda.events.repository.UserRepository;
 
@@ -24,6 +26,8 @@ public class ContextListener{
     UserRepository userRepository;
     @Autowired
     EventRepository eventRepository;
+    @Autowired
+    CommentRepository commentRepository;
 
     @PostConstruct
     public void contextInitialized() {
@@ -87,7 +91,24 @@ public class ContextListener{
                 .build();
         eventRepository.save(event4);
 
-
+        CommentEntity comment = CommentEntity.builder()
+                .eventEntity(event)
+                .userEntity(rafal)
+                .content("This is an AMAZING party!!! Can't wait for it :D")
+                .build();
+        commentRepository.save(comment);
+        CommentEntity comment2 = CommentEntity.builder()
+                .eventEntity(event)
+                .userEntity(robert)
+                .content("It will be spectacular - the food will be delicious")
+                .build();
+        commentRepository.save(comment2);
+        CommentEntity comment3 = CommentEntity.builder()
+                .eventEntity(event)
+                .userEntity(rafal)
+                .content("Thanks Robert, it's really nice to hear that! :)")
+                .build();
+        commentRepository.save(comment3);
 
     }
 

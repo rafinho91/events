@@ -18,6 +18,8 @@ import pl.sda.events.service.ParticipationService;
 import pl.sda.events.service.UserService;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class EventController {
@@ -29,6 +31,14 @@ public class EventController {
     public EventController(EventService eventService, UserService userService) {
         this.eventService = eventService;
         this.userService = userService;
+    }
+
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public ModelAndView index(ModelAndView modelAndView) {
+        List<EventEntity> allEvents = eventService.findAllEvents();
+        modelAndView.addObject("events", allEvents);
+        modelAndView.setViewName("index");
+        return modelAndView;
     }
 
     @RequestMapping(value = "/create", method = RequestMethod.GET)
@@ -51,12 +61,22 @@ public class EventController {
         return modelAndView;
     }
 
-//    @RequestMapping(value = "/eventInfo", method = RequestMethod.GET)
-//    public ModelAndView showEventInfoPage(ModelAndView modelAndView, EventEntity eventEntity, CommentEntity commentEntity) {
-//        modelAndView.addObject("eventEntity", eventEntity);
-//        modelAndView.setViewName("create");
-//        return modelAndView;
-//    }
+    @RequestMapping(value = "/eventInfo/{id}", method = RequestMethod.GET)
+    public ModelAndView showEventInfoPage(ModelAndView modelAndView, @PathVariable String id) {
+        Optional<EventEntity> eventById = eventService.findEventById(Long.valueOf(id));
+        EventEntity event = new EventEntity();
+        UserEntity organiser = new UserEntity();
+        if (eventById.isPresent()){
+            event = eventById.get();
+            organiser = event.getUserEntity();
+        }
+        List<CommentEntity> allComments = eventService.findAllComments(Long.valueOf(id));
+        modelAndView.addObject("eventEntity", event);
+        modelAndView.addObject("userEntity", organiser);
+        modelAndView.addObject("comments", allComments);
+        modelAndView.setViewName("eventInfo");
+        return modelAndView;
+    }
 
 //    @RequestMapping(value = "/addComment", method = RequestMethod.POST)
 //    public ModelAndView addComment(ModelAndView modelAndView, @Valid CommentEntity commentEntity){

@@ -3,34 +3,71 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <title>Title</title>
 </head>
+<style>
+    th, td {
+        font-size: medium;
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+</style>
 <body>
 <div th:insert="fragments/header"></div>
 
 <div class="middle-box text-center loginscreen animated fadeInDown" style="padding: 20px">
     <div>
 
-        <h4>Event Info</h4>
-
-
-
-
-        <form autocomplete="off" action="#" th:action="@{/addComment}"
-              th:object="${commentEntity}" method="post" class="m-t" role="form"
-              data-toggle="validator">
-
-            <div class="form-group input-group has-feedback">
-
-                <input type="text" th:field="*{content}"
-                       placeholder="First Name" class="form-control" required />
-                <span class="glyphicon form-control-feedback"
-                      aria-hidden="true"></span>
+        <table style="width:auto">
+            <tr>
+                <th colspan="2" style="background: darkgray" ><h2>Event INFO</h2></th>
+            </tr>
+            <tr>
+                <th>Name: </th>
+                <td th:text="${eventEntity.getName()}"></td>
+            </tr>
+            <tr>
+                <th>Date: </th>
+                <td th:text="${eventEntity.getDate()}"></td>
+            </tr>
+            <tr>
+                <th>Address: </th>
+                <td th:text="${eventEntity.getAddress()}"></td>
+            </tr>
+            <tr>
+                <th>Organiser: </th>
+                <td th:text="${userEntity.getFirstName()}"></td>
+            </tr>
+            <div th:if="${comments != null}">
+            <tr>
+                <th colspan="2"><h3>Comments: </h3></th>
+            </tr>
+            <tr th:each="comment: ${comments}">
+                <th style="font-size: small; color: slategrey" th:text="${comment.getUserEntity().getFirstName()}"></th>
+                <td style="font-size: small" th:text="${comment.getContent()}"></td>
+            </tr>
             </div>
-            <button type="submit"
-                    class="btn btn-primary block full-width m-b">Register</button>
+        </table>
 
-        </form>
+        <!--<form autocomplete="off" action="#" th:action="@{/addComment}"-->
+              <!--th:object="${commentEntity}" method="post" class="m-t" role="form"-->
+              <!--data-toggle="validator">-->
+
+            <!--<div class="form-group input-group has-feedback">-->
+
+                <!--<input type="text" th:field="*{content}"-->
+                       <!--placeholder="First Name" class="form-control" required />-->
+                <!--<span class="glyphicon form-control-feedback"-->
+                      <!--aria-hidden="true"></span>-->
+            <!--</div>-->
+            <!--<button type="submit"-->
+                    <!--class="btn btn-primary block full-width m-b">Register</button>-->
+
+        <!--</form>-->
 
     </div>
 </div>
