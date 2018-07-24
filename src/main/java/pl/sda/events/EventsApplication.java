@@ -12,9 +12,8 @@ import pl.sda.events.repository.EventRepository;
 @SpringBootApplication
 public class EventsApplication {
 
-    private static final Logger log = LoggerFactory.getLogger(EventsApplication.class);
-
     public static void main(String[] args) {
+
         SpringApplication.run(EventsApplication.class, args);
     }
 

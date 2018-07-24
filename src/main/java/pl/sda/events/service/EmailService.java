@@ -36,10 +36,8 @@ public class EmailService {
         mailSender.send(email);
     }
 
-    public ModelAndView processRegistrationForm(ModelAndView modelAndView,
-                                                UserEntity userEntity,
-                                                BindingResult bindingResult,
-                                                HttpServletRequest request) {
+    public ModelAndView processRegistrationForm(ModelAndView modelAndView, UserEntity userEntity,
+                                                BindingResult bindingResult, HttpServletRequest request) {
         UserEntity userExists = userService.findByEmail(userEntity.getEmail());
         if (userExists != null){
             modelAndView.addObject("alreadyRegisteredMessage",
@@ -101,6 +99,7 @@ public class EmailService {
         UserEntity userEntity = userService.findByConfirmationToken(requestParams.get("token").toString());
         userEntity.setPassword(passwordEncoder.encode(requestParams.get("password").toString()));
         userEntity.setEnabled(true);
+        userEntity.setRole("ROLE_USER");
         userService.saveUser(userEntity);
         modelAndView.addObject("successMessage", "Your password has been set!");
         return modelAndView;

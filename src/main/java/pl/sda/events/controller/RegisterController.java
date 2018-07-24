@@ -21,7 +21,7 @@ public class RegisterController {
     private EmailService emailService;
 
     @Autowired
-    public RegisterController(EmailService emailService){
+    public RegisterController(EmailService emailService) {
         this.emailService = emailService;
     }
 
@@ -36,18 +36,18 @@ public class RegisterController {
     public ModelAndView processRegistrationForm(ModelAndView modelAndView, @Valid UserEntity userEntity,
                                                 BindingResult bindingResult, HttpServletRequest request) {
         return emailService.processRegistrationForm(modelAndView, userEntity, bindingResult, request);
-        }
+    }
 
     @RequestMapping(value = "/confirm", method = RequestMethod.GET)
     public ModelAndView showConfirmationPage(ModelAndView modelAndView,
-                                             @RequestParam String token){
+                                             @RequestParam String token) {
         return emailService.showConfirmationPage(modelAndView, token);
     }
 
     @RequestMapping(value = "/confirm", method = RequestMethod.POST)
     public ModelAndView processConfirmationForm(ModelAndView modelAndView, BindingResult bindingResult,
-                                                @RequestParam Map requestParams, RedirectAttributes redir){
-        return emailService.processConfirmationForm(modelAndView,bindingResult,requestParams,redir);
+                                                @RequestParam Map requestParams, RedirectAttributes redir) {
+        return emailService.processConfirmationForm(modelAndView, bindingResult, requestParams, redir);
     }
 
 }

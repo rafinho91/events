@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="middle-box text-center loginscreen animated fadeInDown" style="padding: 20px">
+    <div>
+
+        <h4>Event Info</h4>
+
+
+
+
+        <form autocomplete="off" action="#" th:action="@{/addComment}"
+              th:object="${commentEntity}" method="post" class="m-t" role="form"
+              data-toggle="validator">
+
+            <div class="form-group input-group has-feedback">
+
+                <input type="text" th:field="*{content}"
+                       placeholder="First Name" class="form-control" required />
+                <span class="glyphicon form-control-feedback"
+                      aria-hidden="true"></span>
+            </div>
+            <button type="submit"
+                    class="btn btn-primary block full-width m-b">Register</button>
+
+        </form>
+
+    </div>
+</div>
+
+</body>
+</html>
