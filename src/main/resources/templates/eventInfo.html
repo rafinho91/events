@@ -39,6 +39,10 @@
                 <td th:text="${eventEntity.getAddress()}"></td>
             </tr>
             <tr>
+                <th>Time: </th>
+                <td th:text="${eventEntity.getTime()}"></td>
+            </tr>
+            <tr>
                 <th>Organiser: </th>
                 <td th:text="${userEntity.getFirstName()}"></td>
             </tr>
@@ -53,21 +57,20 @@
             </div>
         </table>
 
-        <!--<form autocomplete="off" action="#" th:action="@{/addComment}"-->
-              <!--th:object="${commentEntity}" method="post" class="m-t" role="form"-->
-              <!--data-toggle="validator">-->
+        <form autocomplete="off" action="#" th:action="@{__${eventEntity.getId()}__/addComment}"
+              th:object="${commentNew}" method="post" class="m-t" role="form"
+              data-toggle="validator">
 
-            <!--<div class="form-group input-group has-feedback">-->
+            <div class="form-group input-group has-feedback">
 
-                <!--<input type="text" th:field="*{content}"-->
-                       <!--placeholder="First Name" class="form-control" required />-->
-                <!--<span class="glyphicon form-control-feedback"-->
-                      <!--aria-hidden="true"></span>-->
-            <!--</div>-->
-            <!--<button type="submit"-->
-                    <!--class="btn btn-primary block full-width m-b">Register</button>-->
-
-        <!--</form>-->
+                <input type="text" th:field="*{content}"
+                       placeholder="Add your comment here" class="form-control" required />
+                <span class="glyphicon form-control-feedback"
+                      aria-hidden="true"></span>
+            </div>
+            <button type="submit"
+                    class="btn btn-primary block full-width m-b">Comment</button>
+        </form>
 
     </div>
 </div>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Spring Security Tutorial</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+<div th:insert="fragments/header"></div>
+
+<div class="container">
+
+    <!--<form th:object="${eventEntity}" th:action="@{/search}" method="get">-->
+        <!--<input type="text" name="search" id="search" th:value="${searchedEvents}"/>-->
+        <!--<input type="submit" value="Search"/>-->
+        <!--<div th:if="${not #lists.isEmpty(searchedEvents)}">-->
+            <!--<h2>Events List</h2>-->
+            <!--<table style="width:100%; background: burlywood;">-->
+                <!--<tr>-->
+                    <!--<td style="border-right: 2px solid #ddd; border-bottom: 0px" th:each="event: ${searchedEvents}">-->
+                        <!--<table>-->
+                            <!--<tr>-->
+                                <!--<th>Name:</th>-->
+                                <!--<td>-->
+                                    <!--<b><a th:text="${event.getName()}" th:href="|/eventInfo/${event.getId()}|"></a></b>-->
+                                <!--</td>-->
+                            <!--</tr>-->
+                            <!--<tr>-->
+                                <!--<th>Date:</th>-->
+                                <!--<td th:text="${event.getDate()}"></td>-->
+                            <!--</tr>-->
+                            <!--<tr>-->
+                                <!--<th>Time:</th>-->
+                                <!--<td th:text="${event.getTime()}"></td>-->
+                            <!--</tr>-->
+                            <!--<tr>-->
+                                <!--<th>Address:</th>-->
+                                <!--<td th:text="${event.getAddress()}"></td>-->
+                            <!--</tr>-->
+                            <!--<tr>-->
+                                <!--<th>Organiser:</th>-->
+                                <!--<td th:text="${event.getUserEntity().getFirstName()}"></td>-->
+                            <!--</tr>-->
+                        <!--</table>-->
+                    <!--</td>-->
+                <!--</tr>-->
+            <!--</table>-->
+        <!--</div>-->
+    <!--</form>-->
+
+
+    <form th:action="@{/search}" class="form-signin">
+        <h3 class="form-signin-heading">Search by location:</h3>
+        <br/>
+        <input type="text"  id="search" th:placeholder="Location" class="form-control"/> <br/>
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Search</button>
+    </form>
+
+    <form th:action="@{/search/byOrganiser}" method="POST" class="form-signin">
+        <h3 class="form-signin-heading">Search by organiser:</h3>
+        <br/>
+        <input type="text" th:placeholder="Organiser" class="form-control"/> <br/>
+        <button class="btn btn-lg btn-primary btn-block" type="Submit">Search</button>
+    </form>
+
+    <!--<div class="container">-->
+        <!--<table style="width:100%; background: burlywood;">-->
+            <!--<tr>-->
+                <!--<td style="border-right: 2px solid #ddd; border-bottom: 0px" th:each="event: ${searchedEvents}">-->
+                    <!--<table>-->
+                        <!--<tr>-->
+                            <!--<th>Name:</th>-->
+                            <!--<td>-->
+                                <!--<b><a th:text="${event.getName()}" th:href="|/eventInfo/${event.getId()}|"></a></b>-->
+                            <!--</td>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                            <!--<th>Date:</th>-->
+                            <!--<td th:text="${event.getDate()}"></td>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                            <!--<th>Time:</th>-->
+                            <!--<td th:text="${event.getTime()}"></td>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                            <!--<th>Address:</th>-->
+                            <!--<td th:text="${event.getAddress()}"></td>-->
+                        <!--</tr>-->
+                        <!--<tr>-->
+                            <!--<th>Organiser:</th>-->
+                            <!--<td th:text="${event.getUserEntity().getFirstName()}"></td>-->
+                        <!--</tr>-->
+                    <!--</table>-->
+                <!--</td>-->
+            <!--</tr>-->
+        <!--</table>-->
+    <!--</div>-->
+
+</div>
+
+<div>
+<!--<form th:action="@{/byOrganiser}" method="POST" class="form-signin">-->
+<!--<h3 class="form-signin-heading">Search by organiser: </h3>-->
+<!--<br/>-->
+<!--<input type="text" th:placeholder="Organiser" class="form-control" /> <br/>-->
+<!--<button class="btn btn-lg btn-primary btn-block" type="Submit"></button>-->
+<!--</form>-->
+
+</div>
+
+</body>
+</html>

@@ -8,5 +8,6 @@ import java.util.List;
 public interface EventRepository extends JpaRepository<EventEntity,Long>{
 
     List<EventEntity> findByUserEntityId(Long userEntityId);
+    List<EventEntity> findByAddress(String address);
 
 }

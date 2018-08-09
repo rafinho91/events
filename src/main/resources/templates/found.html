@@ -23,29 +23,6 @@
 <div th:insert="fragments/header"></div>
 
 <div class="container">
-    <table width="100%">
-        <tr>
-            <td style="border-bottom: 0"><img src="img/balloons-birthday-celebrate.jpg" height="250"></td>
-            <td style="border-bottom: 0">
-                <b style="font-size: xx-large; color: darkblue; padding: 10px">Welcome to EventsEverywhere!</b>
-                <p style="text-align: center; font-size: x-large; color: darkblue; font-weight: bold;padding: 10px">
-                    Find.. &nbsp;&nbsp;&nbsp;&nbsp;Create.. &nbsp;&nbsp;&nbsp;&nbsp;Invite!</p>
-            </td>
-        </tr>
-    </table>
-
-    <div th:if="${#authorization.expression('isAuthenticated()')}">
-        Logged in user: <b th:inline="text" class="user"> [[${#httpServletRequest.remoteUser}]] </b>
-        <form th:action="@{/logout}" method="POST">
-            <input type="submit" value="Logout"/>
-        </form>
-    </div>
-    <br/>
-
-</div>
-<!-- /.container -->
-
-<div class="container">
     <table style="width:100%; background: burlywood;">
         <tr>
             <td style="border-right: 2px solid #ddd; border-bottom: 0px" th:each="event: ${events}">

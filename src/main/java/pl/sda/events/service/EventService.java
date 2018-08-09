@@ -14,5 +14,6 @@ public interface EventService {
     Optional<EventEntity> findEventById(Long id);
     List<CommentEntity> findAllComments(Long eventId);
     List<EventEntity> findAllEvents();
+    List<EventEntity> findByLocation(String location);
 
 }

@@ -26,11 +26,13 @@ public class EventController {
 
     private EventService eventService;
     private UserService userService;
+    private CommentService commentService;
 
     @Autowired
-    public EventController(EventService eventService, UserService userService) {
+    public EventController(EventService eventService, UserService userService, CommentService commentService) {
         this.eventService = eventService;
         this.userService = userService;
+        this.commentService = commentService;
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
@@ -62,7 +64,7 @@ public class EventController {
     }
 
     @RequestMapping(value = "/eventInfo/{id}", method = RequestMethod.GET)
-    public ModelAndView showEventInfoPage(ModelAndView modelAndView, @PathVariable String id) {
+    public ModelAndView showEventInfoPage(ModelAndView modelAndView, @PathVariable String id, CommentEntity commentNew) {
         Optional<EventEntity> eventById = eventService.findEventById(Long.valueOf(id));
         EventEntity event = new EventEntity();
         UserEntity organiser = new UserEntity();
@@ -74,18 +76,21 @@ public class EventController {
         modelAndView.addObject("eventEntity", event);
         modelAndView.addObject("userEntity", organiser);
         modelAndView.addObject("comments", allComments);
+        modelAndView.addObject("commentNew", commentNew);
         modelAndView.setViewName("eventInfo");
         return modelAndView;
     }
 
-//    @RequestMapping(value = "/addComment", method = RequestMethod.POST)
-//    public ModelAndView addComment(ModelAndView modelAndView, @Valid CommentEntity commentEntity){
-//        commentService.addComment(commentEntity);
-//        modelAndView.addObject("confirmationMessage",
-//                "Your comment has been added successfully");
-//        modelAndView.setViewName("addComment");
-//        return modelAndView;
-//    }
+    @RequestMapping(value = "eventInfo/{id}/addComment", method = RequestMethod.POST)
+    public String addComment(ModelAndView modelAndView, CommentEntity commentAdd, @PathVariable String id){
+        EventEntity eventEntity = eventService.findEventById(Long.valueOf(id)).get();
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        UserEntity byEmail = userService.findByEmail(email);
+        CommentEntity comment = CommentEntity.builder()
+                .userEntity(byEmail).eventEntity(eventEntity).content(commentAdd.getContent()).build();
+        commentService.addComment(comment);
+        return "redirect:/eventInfo/" + eventEntity.getId();
+    }
 
 
 
